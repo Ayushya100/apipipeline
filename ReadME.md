@@ -35,3 +35,16 @@ To run all services together:
 
 ```bash
 docker-compose up --build
+Docker Commands:
+- docker-compose -f docker-compose.dev.yml up --build
+This will build images for all your services using their Dockerfile, start all containers and stream logs to terminal.
+
+- docker-compose -f docker-compose.dev.yml up --build -d
+Add -d to run in detached mode
+
+- docker-compose -f docker-compose.dev.yml up --build accounts-svc
+Rebuild specific services only.
+
+- docker-compose -f docker-compose.dev.yml down
+Stop execution
+```
