@@ -2,7 +2,11 @@ version: '3.8'
 
 services:
   accounts-svc:
-    build: .
+    build:
+      context: ./services/accounts-svc
+      args:
+        GITHUB_TOKEN: ${GITHUB_TOKEN}
+    container_name: accounts-service
     ports:
       - 3200:3200
     volumes:
