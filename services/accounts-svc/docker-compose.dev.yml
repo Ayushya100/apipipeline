@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  accounts-svc:
+    build: .
+    ports:
+      - 3200:3200
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+    command: npm run start
+  
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - pgdata:/data/db
+
+volumes:
+  pgdata:
