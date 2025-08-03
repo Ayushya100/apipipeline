@@ -1,4 +1,4 @@
-FROM node:20
+FROM node:20.13.1-alpine
 
 # Accept GitHub PAT as a build argument
 ARG GITHUB_TOKEN
