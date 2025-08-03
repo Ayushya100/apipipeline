@@ -101,6 +101,9 @@ const registerNewUser = async (payload) => {
     const userId = convertPrettyStringToId(userInfo.data.id);
     const verificationCodeGenerated = await generateEmailVerificationCode(userId);
 
+    // TODO: Send new mail for verification
+    // await sendVerificationMailToUser(resData);
+
     let message = 'User registered successfully';
     if (!verificationCodeGenerated.isValid) {
       message += '. Failed to generate the verification code. Try logging in to verify your email.';

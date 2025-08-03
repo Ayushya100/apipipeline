@@ -62,4 +62,26 @@ const registerEmailVerification = async (userId, verificationCode, verificationC
   return record;
 };
 
-export { fetchDefaultUserRole, isUsernameEmailInUse, createNewUser, getUserInfo, registerEmailVerification };
+const fetchUserMetaInfo = async (userId) => {
+  let query = `SELECT ID, USER_ID, VERIFICATION_TOKEN, VERIFICATION_TOKEN_EXP, FORGOT_PASSWORD_TOKEN, FORGOT_PASSWORD_TOKEN_EXP
+    , CREATED_DATE, MODIFIED_DATE
+    FROM USER_METADATA
+    WHERE IS_DELETED = false AND USER_ID = ?`;
+  let params = [userId];
+
+  return await exec(query, params);
+};
+
+const verifyUserEmail = async (userId) => {
+  let query = `UPDATE USER_METADATA SET VERIFICATION_TOKEN = NULL, VERIFICATION_TOKEN_EXP = now()
+    WHERE USER_ID = ?`;
+  const params = [userId];
+  await exec(query, params);
+
+  query = `UPDATE USERS SET IS_VERIFIED = true
+    WHERE ID = ?
+    RETURNING IS_VERIFIED`;
+  return await exec(query, params);
+};
+
+export { fetchDefaultUserRole, isUsernameEmailInUse, createNewUser, getUserInfo, registerEmailVerification, fetchUserMetaInfo, verifyUserEmail };
