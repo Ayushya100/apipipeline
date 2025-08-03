@@ -1,7 +1,7 @@
 'use strict';
 
-import healthCheck from './healthCheck.controller.js';
+import userController from './user-controllers/index.js';
 
 export default {
-  healthCheck,
+  userController,
 };

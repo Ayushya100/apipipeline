@@ -13,6 +13,52 @@ servers:
 
 components:
   schemas:
+    # Request
+    Username:
+      type: string
+      description: Username for the account
+      pattern: '^[a-zA-Z0-9]{4,24}$'
+
+    EmailId:
+      type: string
+      description: The email id of user
+      pattern: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$'
+
+    Password:
+      type: string
+      description: user account password
+      pattern: '^[a-zA-Z0-9@_.&*#$]{8,32}$'
+  
+    # Request Payload
+    registerUserPayload:
+      type: object
+      properties:
+        firstName:
+          type: string
+          description: First Name
+          minLength: 1
+        lastName:
+          type: string
+          description: Last Name
+        username:
+          type: string
+          description: Username
+          $ref: '#/components/schemas/Username'
+        emailId:
+          type: string
+          description: Email Id
+          $ref: '#/components/schemas/EmailId'
+        password:
+          type: string
+          description: Password
+          $ref: '#/components/schemas/Password'
+      required:
+        - firstName
+        - username
+        - emailId
+        - password
+
+    # Response Data
     healthCheckData:
       title: Schema for Health Check Data
       type: object
@@ -24,6 +70,64 @@ components:
         hostname:
           type: string
 
+    verificationData:
+      title: Schema for User Verification Data
+      type: object
+      properties:
+        verificationToken:
+          type: string
+        verificationTokenExp:
+          type: string
+
+    registerUserResponseData:
+      title: Schema for Register User Response Data
+      type: object
+      properties:
+        id:
+          type: string
+        firstName:
+          type: string
+          example: First Name
+        email:
+          type: string
+          example: email@exmp.xyz
+        username:
+          type: string
+          example: username
+        loginType:
+          type: string
+          example: EMAIL_PASSWORD
+        isEmailVerified:
+          type: boolean
+          example: true
+        role:
+          type: string
+          example: USER
+        lastLogin:
+          type: string
+        loginCount:
+          type: integer
+          example: 0
+        createdDate:
+          type: string
+        modifiedDate:
+          type: string
+        verification:
+          type: object
+          $ref: '#/components/schemas/verificationData'
+      required:
+        - id
+        - firstName
+        - email
+        - username
+        - loginType
+        - isEmailVerified
+        - role
+        - createdDate
+        - modifiedDate
+        - verification
+
+    # Response
     healthCheckSuccessResponse:
       type: object
       properties:
@@ -51,6 +155,36 @@ components:
         - devMessage
         - success
 
+    registerUserResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          example: 201
+        type:
+          type: string
+          example: 'REQUEST_COMPLETED'
+        message:
+          type: string
+          example: 'Request Completed'
+        devMessage:
+          type: string
+          example: 'Request Completed'
+        success:
+          type: boolean
+          example: true
+        data:
+          type: object
+          $ref: '#/components/schemas/registerUserResponseData'
+      required:
+        - statusCode
+        - type
+        - message
+        - devMessage
+        - success
+        - data
+
+    # Error Response
     noContentResponse:
       type: object
       properties:
@@ -247,6 +381,43 @@ paths:
                 $ref: '#/components/schemas/healthCheckSuccessResponse'
         '500':
           description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalServerErrorResponse'
+
+  /register-user:
+    post:
+      operationId: registerUser
+      summary: Register New User
+      description: An API to register a user in the system.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/registerUserPayload'
+      responses:
+        '201':
+          description: REQUEST_COMPLETED
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/registerUserResponse'
+        '404':
+          description: NOT_FOUND
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/notFound'
+        '409':
+          description: CONFLICT
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/userAlreadyExist'
+        '500':
+          description: INTERNAL_SERVER_ERROR
           content:
             application/json:
               schema:
