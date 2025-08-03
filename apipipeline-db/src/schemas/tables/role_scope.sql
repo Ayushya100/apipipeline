@@ -1,0 +1,14 @@
+CREATE TABLE ROLE_SCOPE (
+    id TEXT PRIMARY KEY DEFAULT UPPER(REPLACE(uuid_generate_v4()::TEXT, '-', '')),
+    role_id TEXT NOT NULL,
+    scope_id TEXT NOT NULL,
+    core BOOLEAN DEFAULT FALSE,
+    created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_by VARCHAR(100) DEFAULT 'SYSTEM',
+    modified_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    modified_by VARCHAR(100) DEFAULT 'SYSTEM',
+    version INT DEFAULT 1,
+    is_deleted BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (role_id) REFERENCES user_role(id) ON DELETE CASCADE,
+    FOREIGN KEY (scope_id) REFERENCES user_scope(id) ON DELETE CASCADE
+);

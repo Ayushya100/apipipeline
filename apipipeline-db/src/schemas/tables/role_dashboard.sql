@@ -1,0 +1,14 @@
+CREATE TABLE ROLE_DASHBOARD (
+    id TEXT PRIMARY KEY DEFAULT UPPER(REPLACE(uuid_generate_v4()::TEXT, '-', '')),
+    role_id TEXT NOT NULL,
+    header_id TEXT NOT NULL,
+    core BOOLEAN DEFAULT FALSE,
+    created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_by VARCHAR(100) DEFAULT 'SYSTEM',
+    modified_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    modified_by VARCHAR(100) DEFAULT 'SYSTEM',
+    version INT DEFAULT 1,
+    is_deleted BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (role_id) REFERENCES user_role(id) ON DELETE CASCADE,
+    FOREIGN KEY (header_id) REFERENCES dashboard_setup_header(id) ON DELETE CASCADE
+);
