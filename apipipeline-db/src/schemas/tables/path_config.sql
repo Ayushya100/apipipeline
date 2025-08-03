@@ -6,7 +6,7 @@ CREATE TABLE path_config (
     path TEXT NOT NULL,
     method method_opt,
     validations TEXT[],
-    metadata: TEXT,
+    metadata TEXT,
     core BOOLEAN DEFAULT FALSE,
     created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     created_by VARCHAR(100) DEFAULT 'SYSTEM',
