@@ -3,7 +3,7 @@
 import fs from 'fs';
 import path from 'path';
 import csv from 'csv-parser';
-import { logger } from 'common-node-lib';
+import { logger } from '@ayushya100/common-node-lib';
 
 const log = logger('seed-data');
 
