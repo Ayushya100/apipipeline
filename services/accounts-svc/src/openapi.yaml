@@ -12,6 +12,24 @@ servers:
     description: Local development server
 
 components:
+  parameters:
+    UserIdParam:
+      name: userId
+      description: The ID of user to verify
+      in: path
+      required: true
+      schema:
+        type: string
+        pattern: '^[A-F0-9]{8}:[A-F0-9]{4}-[A-F0-9]{4}-[A-F0-9]{4}-[A-F0-9]{11}'
+
+    TokenParam:
+      name: token
+      description: The verification token sent to the user's email
+      in: path
+      required: true
+      schema:
+        type: string
+
   schemas:
     # Request
     Username:
@@ -183,6 +201,33 @@ components:
         - devMessage
         - success
         - data
+
+    verifyUserResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          example: 200
+        type:
+          type: string
+          example: 'SUCCESS'
+        message:
+          type: string
+          example: 'Success'
+        devMessage:
+          type: string
+          example: 'Success'
+        success:
+          type: boolean
+          example: true
+        data:
+          type: object
+      required:
+        - statusCode
+        - type
+        - message
+        - devMessage
+        - success
 
     # Error Response
     noContentResponse:
@@ -416,6 +461,52 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/userAlreadyExist'
+        '500':
+          description: INTERNAL_SERVER_ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalServerErrorResponse'
+
+  /verify-user/{userId}/{token}:
+    put:
+      operationId: verifyUser
+      summary: Verify User Email ID
+      description: An API to verify user email id in the system.
+      parameters:
+        - $ref: '#/components/parameters/UserIdParam'
+        - $ref: '#/components/parameters/TokenParam'
+      responses:
+        '200':
+          description: SUCCESS
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/verifyUserResponse'
+        '400':
+          description: BAD_REQUEST
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestResponse'
+        '404':
+          description: NOT_FOUND
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/notFound'
+        '410':
+          description: GONE
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gone'
+        '489':
+          description: BAD_EVENT
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badEvent'
         '500':
           description: INTERNAL_SERVER_ERROR
           content:
