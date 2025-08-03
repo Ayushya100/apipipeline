@@ -1,22 +1,18 @@
 version: '3.8'
 
 services:
-  accounts-svc:
+  apipipeline-db:
     build:
-      context: ./services/accounts-svc
+      context: ./apipipeline-db
       args:
         GITHUB_TOKEN: ${GITHUB_TOKEN}
-    container_name: accounts-service
-    ports:
-      - 3200:3200
     volumes:
-      - ./:/usr/src/app
+      - ./:usr/src/app
       - /usr/src/app/node_modules
     env_file:
       - .env
     depends_on:
       - postgres
-    command: npm run start
   
   postgres:
     image: postgres:14

@@ -1,0 +1,27 @@
+{
+  "name": "apipipeline-db",
+  "version": "1.0.0",
+  "description": "This folder contains the **database schema, views, stored procedures, triggers, and default data** required for the application. The database is **independent of any microservice** and serves as a shared resource.\r ## Overview\r - All SQL scripts, including **schemas, views, stored procedures, and frequent queries**, are maintained here.\r - **Prisma** and **prisma/client** is used for query building in microservices.\r - The database repository runs **only when needed**, such as during a schema update.\r ## Documentation\r - **DB Schema Documentation:** [Api-pipeline DB Schema](https://app.eraser.io/workspace/YSAwzaLguZIJlZyVxQRb?origin=share)\r ---\r **Api-pipeline** - Simplifying code learning for Everyone!",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "doc-migrate": "docker-compose run --rm app node src/scripts/migrate.js",
+    "migrate": "node src/scripts/migrate.js",
+    "seed": "node src/scripts/seed.js",
+    "reset-db": "npm run migrate && npm run seed",
+    "format": "prettier --write \"src/**/*.js\"",
+    "format:check": "prettier --check \"src/**/*.js\""
+  },
+  "author": "Ayushya Jaiswal",
+  "license": "ISC",
+  "devDependencies": {
+    "prettier": "^3.6.2"
+  },
+  "dependencies": {
+    "@ayushya100/common-node-lib": "^1.0.0",
+    "csv-parser": "^3.2.0",
+    "dotenv": "^17.2.1",
+    "knex": "^3.1.0",
+    "pg": "^8.16.3"
+  }
+}

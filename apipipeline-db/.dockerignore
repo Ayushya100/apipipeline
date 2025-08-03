@@ -1,0 +1,2 @@
+# Don't leak your .npmrc with hardcoded token
+!*.npmrc
