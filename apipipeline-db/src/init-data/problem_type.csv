@@ -1,0 +1,3 @@
+id,type_cd,type_desc,executor,core,created_date,created_by,modified_date,modified_by,version,is_deleted
+039DD0C661E04940B2F0A1BB00C689AA,DSA,Data Structures and Algorithms,Judge0,true,2025-05-10 11:43:01.971315,SYSTEM,2025-05-10 11:45:39.982525,SYSTEM,1,false
+1F45840E275E41D98967B47FA76ACF4F,API,Application Programming Interface,JudgeAPI,true,2025-05-10 11:42:01.907278,SYSTEM,2025-05-10 12:26:43.286668,SYSTEM,1,false	

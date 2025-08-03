@@ -1,0 +1,4 @@
+id,header_id,category_cd,category_name,user_applicable,category_type,options,value,core,created_date,created_by,modified_date,modified_by,version,is_deleted
+7A3A76D763C947AF82F44CFCEF0B4292,B2D7D066DE6747CA9E6F1E5D53384DE1,THEME,Theme,true,singleselect,"{dark,light}",dark,true,2025-05-08 23:29:57.835639,SYSTEM,2025-05-09 23:10:17.645729,SYSTEM,1,false
+67E2E3C8C5AF44E7B3A9A84BD9272F8F,B2D7D066DE6747CA9E6F1E5D53384DE1,LANG,Language,true,toggle,"{eng,hin}",eng,true,2025-05-08 23:24:36.067963,SYSTEM,2025-05-09 23:10:17.660432,SYSTEM,1,false
+C9E42651E9BA4C2EB966CE6D3B394EAA,7B1513637A514A90A62D71FE9A72D648,APP-TITLE,Application Title,false,text,"{}",Leetlab,true,2025-05-10 10:22:16.477662,SYSTEM,2025-05-10 10:22:56.272825,SYSTEM,1,false
