@@ -1,0 +1,253 @@
+openapi: 3.0.0
+info:
+  title: Accounts Service
+  version: 1.0.0
+  description: The Accounts Service is responsible for managing user-related operations and system configurations.
+    User Management - Create, retrieve, update and delete user accounts.
+    Authentication & Authorization - Handle user authentication, session management, and access control.
+    System Configurations - Manage system-specific setting such as API configurations, user scopes and groups.
+
+servers:
+  - url: /accounts-svc/api/v1.0
+    description: Local development server
+
+components:
+  schemas:
+    healthCheckData:
+      title: Schema for Health Check Data
+      type: object
+      properties:
+        uptime:
+          type: string
+        timestamp:
+          type: string
+        hostname:
+          type: string
+
+    healthCheckSuccessResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          example: 200
+        type:
+          type: string
+          example: 'SUCCESS'
+        message:
+          type: string
+          example: 'Success'
+        devMessage:
+          type: string
+          example: 'Success'
+        success:
+          type: boolean
+          example: true
+        data:
+          $ref: '#/components/schemas/healthCheckData'
+      required:
+        - statusCode
+        - type
+        - message
+        - devMessage
+        - success
+
+    noContentResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          example: 204
+        type:
+          type: string
+          example: 'CONTENT_NOT_AVAILABLE'
+        message:
+          type: string
+          example: 'No content available'
+        devMessage:
+          type: string
+          example: 'No content available'
+        success:
+          type: boolean
+          example: true
+        data:
+          type: array
+
+    badRequestResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          example: 400
+        type:
+          type: string
+          example: 'BAD_REQUEST'
+        message:
+          type: string
+          example: 'Bad Request'
+        devMessage:
+          type: string
+          example: Bad Request. Required resource does not exist.
+        error:
+          type: array
+        data:
+          type: array
+
+    unauthorizedResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          example: 401
+        type:
+          type: string
+          example: 'UNAUTHORIZED'
+        message:
+          type: string
+          example: 'Unauthorized'
+        devMessage:
+          type: string
+          example: Unauthorized access. Could not proceed with the request.
+        error:
+          type: array
+        data:
+          type: array
+
+    forbiddenResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          example: 403
+        type:
+          type: string
+          example: 'FORBIDDEN'
+        message:
+          type: string
+          example: 'Forbidden'
+        devMessage:
+          type: string
+          example: Forbidden access. Could not proceed with the request.
+        error:
+          type: array
+        data:
+          type: array
+    
+    notFound:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          example: 404
+        type:
+          type: string
+          example: 'NOT_FOUND'
+        message:
+          type: string
+          example: 'Resource Not Found'
+        devMessage:
+          type: string
+          example: Not Found. Requested resource does not exist.
+        error:
+          type: array
+        data:
+          type: array
+
+    gone:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          example: 410
+        type:
+          type: string
+          example: 'GONE'
+        message:
+          type: string
+          example: 'The requested content has been permanently deleted from server.'
+        devMessage:
+          type: string
+          example: 'The requested content has been permanently deleted from server.'
+        error:
+          type: array
+        data:
+          type: array
+
+    badEvent:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          example: 489
+        type:
+          type: string
+          example: 'BAD_EVENT'
+        message:
+          type: string
+          example: 'The server did not understand an event package specified in an Event header field.'
+        devMessage:
+          type: string
+          example: 'The server did not understand an event package specified in an Event header field.'
+        error:
+          type: array
+        data:
+          type: array
+
+    userAlreadyExist:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          example: 409
+        type:
+          type: string
+          example: 'CONFLICT'
+        message:
+          type: string
+          example: 'Resource already exist'
+        devMessage:
+          type: string
+          example: 'Resource already exist'
+        error:
+          type: array
+        data:
+          type: array
+
+    internalServerErrorResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          example: 500
+        type:
+          type: string
+          example: 'Internal Server Error'
+        message:
+          type: string
+          example: 'Internal Server Error'
+        devMessage:
+          type: string
+          example: 'Internal Server Error'
+        error:
+          type: array
+        data:
+          type: array
+
+paths:
+  /health:
+    get:
+      operationId: healthCheck
+      summary: Service Health Check
+      description: An API to check the health status of the service.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/healthCheckSuccessResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalServerErrorResponse'
