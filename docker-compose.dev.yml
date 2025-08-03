@@ -14,6 +14,30 @@ services:
       - 5672:5672
       - 15672:15672
 
+  postgres:
+    image: postgres:14
+    container_name: postgres
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/data/db
+
+  apipipeline-db:
+    build:
+      context: ./apipipeline-db
+      args:
+        GITHUB_TOKEN: ${GITHUB_TOKEN}
+    volumes:
+      - ./apipipeline-db:/usr/src/app
+    env_file:
+      - ./apipipeline-db/.env
+    depends_on:
+      - postgres
+
   accounts-svc:
     build:
       context: ./services/accounts-svc
@@ -28,3 +52,7 @@ services:
     depends_on:
       - redis
       - rabbitmq
+      - postgres
+
+volumes:
+  pgdata:

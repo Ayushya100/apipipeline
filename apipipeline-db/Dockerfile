@@ -9,15 +9,12 @@ WORKDIR /usr/src/app
 # Configure npm to use GitHub Packages
 RUN echo "//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}" > .npmrc
 
-# Copy package files and install dependencies
+# Copy package
 COPY package.json package-lock.json ./
 RUN npm install
 
-# Copy app source code
+# Copy db source code
 COPY . .
 
-# Expose application port
-EXPOSE 3200
-
-# Start the app
-CMD ["npm", "start"]
+# Run migration + seed on container start
+CMD ["npm", "run", "reset-db"]
