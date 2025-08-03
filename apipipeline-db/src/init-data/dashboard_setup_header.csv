@@ -1,0 +1,3 @@
+id,header_cd,header_desc,is_active,core,created_date,created_by,modified_date,modified_by,version,is_deleted
+B2D7D066DE6747CA9E6F1E5D53384DE1,GENERAL,General Setup,true,true,2025-05-08 20:28:57.685843,SYSTEM,2025-05-09 23:31:46.914333,SYSTEM,1,false
+7B1513637A514A90A62D71FE9A72D648,SYSTEM,System Setup,true,true,2025-05-08 20:29:38.898289,SYSTEM,2025-05-09 23:37:33.15825,SYSTEM,1,false
